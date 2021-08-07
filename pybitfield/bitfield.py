@@ -1,3 +1,11 @@
+from enum import Enum, auto
+
+
+class ByteOrder(Enum):
+	big = auto()
+	little = auto()
+
+
 class Bitfield:
 	def __init__(self, number_of_element: int, bitfield=0):
 		"""
