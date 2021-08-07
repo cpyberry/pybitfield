@@ -58,7 +58,7 @@ class Bitfield:
 		"""
 		return self.bitfield & self.to_bitfield(index) != 0
 
-	def get_bit_list(self) -> list[bool]:
+	def get_bit_list(self) -> list:
 		"""Return the current bit state as a bool type list.
 
 		Returns:
