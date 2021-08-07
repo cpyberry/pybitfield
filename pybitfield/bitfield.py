@@ -1,3 +1,13 @@
+"""
+Copyright 2021 cpyberry
+https://github.com/cpyberry/pybitfield
+
+cpyberry
+email: cpyberry222@gmail.com
+github: https://github.com/cpyberry
+"""
+
+
 import math
 from enum import Enum, auto
 
