@@ -18,6 +18,16 @@ class Bitfield:
 		"""
 		self.bitfield |= self.to_bitfield(index)
 
+	def remove_bit(self, index: int) -> None:
+		"""Remove the bit at the location specified by index.
+
+		The index starts from zero.
+
+		Args:
+			index (int): where you want to remove the bit.
+		"""
+		self.bitfield &= ~self.to_bitfield(index)
+
 	@staticmethod
 	def to_bitfield(index: int) -> int:
 		"""Return a bitfield with a bit at the position specified by index.
