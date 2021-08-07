@@ -39,6 +39,17 @@ class Bitfield:
 		"""
 		return self.bitfield & self.to_bitfield(index) != 0
 
+	def get_bit_list(self) -> list[bool]:
+		"""Return the current bit state as a bool type list.
+
+		Returns:
+			list[bool]: True if bit is set, False otherwise.
+		"""
+		result = []
+		for index in range(self.number_of_element):
+			result.append(self.is_bit(index))
+		return result
+
 	@staticmethod
 	def to_bitfield(index: int) -> int:
 		"""Return a bitfield with a bit at the position specified by index.
