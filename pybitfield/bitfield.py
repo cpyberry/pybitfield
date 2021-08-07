@@ -28,6 +28,17 @@ class Bitfield:
 		"""
 		self.bitfield &= ~self.to_bitfield(index)
 
+	def is_bit(self, index: int) -> bool:
+		"""Check if the bit specified by index is set.
+
+		Args:
+			index (int): Where you want to find out if a bit is setting.
+
+		Returns:
+			bool: True if bit is set, False otherwise.
+		"""
+		return self.bitfield & self.to_bitfield(index) != 0
+
 	@staticmethod
 	def to_bitfield(index: int) -> int:
 		"""Return a bitfield with a bit at the position specified by index.
