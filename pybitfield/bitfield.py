@@ -77,12 +77,10 @@ class Bitfield:
 		"""
 		length = math.ceil(self.number_of_element / 8)
 
-		# self.bitfield stores bitfield like littile endian.
-		# If the first bit is 0, the second bit is 1, and the third bit is 1, it is stored as 0b110.
 		if byteorder == ByteOrder.big:
-			return self.bitfield.to_bytes(length, byteorder="little")
-		else:
 			return self.bitfield.to_bytes(length, byteorder="big")
+		else:
+			return self.bitfield.to_bytes(length, byteorder="little")
 
 	@staticmethod
 	def to_bitfield(index: int) -> int:
