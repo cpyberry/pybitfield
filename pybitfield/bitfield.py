@@ -8,6 +8,16 @@ class Bitfield:
 		self.number_of_element = number_of_element
 		self.bitfield = bitfield
 
+	def set_bit(self, index: int) -> None:
+		"""Set the bit at the location specified by index.
+
+		The index starts from zero.
+
+		Args:
+			index (int): where you want to set the bit.
+		"""
+		self.bitfield |= self.to_bitfield(index)
+
 	@staticmethod
 	def to_bitfield(index: int) -> int:
 		"""Return a bitfield with a bit at the position specified by index.
