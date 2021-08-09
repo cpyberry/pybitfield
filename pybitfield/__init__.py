@@ -8,7 +8,7 @@ github: https://github.com/cpyberry
 """
 
 
-from .bitfield import ByteOrder, Bitfield
+from .bitfield import BitOrder, Bitfield
 
 
 __copyright__ = "Copyright 2021 cpyberry"
