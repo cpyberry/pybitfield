@@ -1,0 +1,107 @@
+# pybitfield
+
+A library that makes it easy to handle bitfields with python.
+
+## Usage
+
+When constructing a bitfield with 5 elements, do as follows.
+
+In this case, information up to 5 bits can be stored.
+
+Unless otherwise specified, all bits are 0.
+
+```python
+from pybitfield import Bitfield, BitOrder
+
+
+number_of_element = 5
+bitfield = Bitfield(number_of_element)
+```
+
+If you want to set the bit, do as follows.
+
+Since the index is zero based, the bitfield stored when running this code is `01111`.
+
+This is the case for big endian.
+
+```python
+bitfield.set_bit(0)
+bitfield.set_bit(1)
+bitfield.set_bit(2)
+bitfield.set_bit(3)
+
+# Since the number of elements is 8 and the index is zero-based, a total of 8 elements from 0 to 7 can be specified.
+# bitfield.set_bit(5)
+```
+
+This code remove the 1st and 3rd bits.
+
+This result is `00101`
+
+```python
+bitfield.remove_bit(1)
+bitfield.remove_bit(3)
+```
+
+You can use `is_bit()` to make sure the bit is set.
+
+```python
+bitfield.is_bit(1)  # return False
+bitfield.is_bit(2)  # return True
+```
+
+If you want to convert bitfield to list type, you can use `get_bit_list()`.
+
+The index of bitfield and the index of list correspond.
+
+0 is converted to False, 1 is converted to True.
+
+```python
+bitfield.get_bit_list()
+
+# [True, False, True, False, False]
+```
+
+If you want to reverse bitfield, you can use `swap_bitfield()`.
+
+The argument represents the bit length.
+
+If you call the method with no arguments, the number of elements in the bitfield will be applied.
+
+```python
+bitfield.swap_bitfield()
+# 20
+# 0b10100
+
+bitfield.swap_bitfield(8)
+# 160
+# 0b10100000
+
+bitfield.swap_bitfield(10)
+# 640
+# 0b1010000000
+```
+
+If you want to convert bitfield to bytes type, you can use `get_bitfield_bytes()`.
+
+You can use `BitOrder` enumerator class to specify the bit order.
+
+If the number of elements in the bitfield is not a multiple of 8, the smallest byte length that can represent it will be applied.
+
+In this case, the number of elements in the bitfield is 5, so 1 byte is applied.
+
+```python
+bitfield.get_bitfield_bytes(BitOrder.big)
+# b'\x05'
+# 0b00000101
+
+bitfield.get_bitfield_bytes(BitOrder.little)
+# b'\xa0'
+# 0b10100000
+```
+
+## Founder
+
+* [cpyberry](https://github.com/cpyberry)
+
+	email: cpyberry222@gmail.com
