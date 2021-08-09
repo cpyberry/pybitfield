@@ -96,12 +96,7 @@ class Bitfield:
 		Returns:
 			int: swapped bitfield.
 		"""
-		if not length:
-			length = self.number_of_element
-
-		bitfield_str = format(self.bitfield, "b")
-		swapped_bitfield_str = bitfield_str.zfill(length)[::-1]
-		return int(swapped_bitfield_str, 2)
+		return self.swap_any_bitfield(self.bitfield, length)
 
 	@staticmethod
 	def to_bitfield(index: int) -> int:
@@ -116,3 +111,23 @@ class Bitfield:
 			int: the bitfield.
 		"""
 		return pow(2, index)
+
+	@staticmethod
+	def swap_any_bitfield(bitfield: int, length=None) -> int:
+		"""Returns the swapped bitfield.
+
+		If 0b10 is specified as an argument, the return value will be 0b01.
+
+		Args:
+			bitfield (int): bitfield you want to swap.
+			length (int, optional): bit length. If None, the current bitfield length is applied. Defaults to None.
+
+		Returns:
+			int: swapped bitfield.
+		"""
+		if not length:
+			length = len(str(bitfield))
+
+		bitfield_str = format(bitfield, "b")
+		swapped_bitfield_str = bitfield_str.zfill(length)[::-1]
+		return int(swapped_bitfield_str, 2)
