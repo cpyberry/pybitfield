@@ -12,7 +12,7 @@ import math
 from enum import Enum, auto
 
 
-class ByteOrder(Enum):
+class BitOrder(Enum):
 	big = auto()
 	little = auto()
 
@@ -69,18 +69,39 @@ class Bitfield:
 			result.append(self.is_bit(index))
 		return result
 
-	def get_bitfield_bytes(self, byteorder=ByteOrder.big) -> bytes:
+	def get_bitfield_bytes(self, bit_order=BitOrder.big) -> bytes:
 		"""Convert current bitfield to bytes type.
 
 		Returns:
 			bytes: bitfield converted to byte type.
 		"""
-		length = math.ceil(self.number_of_element / 8)
+		byte_length = math.ceil(self.number_of_element / 8)
 
-		if byteorder == ByteOrder.big:
-			return self.bitfield.to_bytes(length, byteorder="big")
+		if bit_order == BitOrder.big:
+			return self.bitfield.to_bytes(byte_length, byteorder="big")
 		else:
-			return self.bitfield.to_bytes(length, byteorder="little")
+			bit_length = byte_length * 8
+			little_endian_bitfield = self.swap_bitfield(bit_length)
+			# It has already been converted to little endian, so return it as it is as big endian.
+			return little_endian_bitfield.to_bytes(byte_length, byteorder="big")
+
+	def swap_bitfield(self, length=None) -> int:
+		"""Returns the swapped bitfield.
+
+		If 0b10 is specified as an argument, the return value will be 0b01.
+
+		Args:
+			length (int, optional): bit length. If None, the current bitfield length is applied. Defaults to None.
+
+		Returns:
+			int: swapped bitfield.
+		"""
+		if not length:
+			length = self.number_of_element
+
+		bitfield_str = format(self.bitfield, "b")
+		swapped_bitfield_str = bitfield_str.zfill(length)[::-1]
+		return int(swapped_bitfield_str, 2)
 
 	@staticmethod
 	def to_bitfield(index: int) -> int:
