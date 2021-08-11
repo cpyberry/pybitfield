@@ -96,12 +96,35 @@ class Bitfield:
 		Returns:
 			int: swapped bitfield.
 		"""
-		if not length:
-			length = self.number_of_element
+		return self.swap_any_bitfield(self.bitfield, length)
 
-		bitfield_str = format(self.bitfield, "b")
-		swapped_bitfield_str = bitfield_str.zfill(length)[::-1]
-		return int(swapped_bitfield_str, 2)
+	@classmethod
+	def from_bytes(cls, data: bytes, length: int, bit_order=BitOrder.big):
+		"""Create an instance of the Bitfield class from the bytes type.
+
+		When the bytes is converted to bitfield, bits which exceed max bit length are removed.
+
+		Args:
+			data (bytes): bytes to convert to bitfield.
+			length (int): fixed length size of bitfield.
+			bit_order (BitOrder, optional): bit order. Defaults to BitOrder.big.
+
+		Returns:
+			Bitfield: an instance of the Bitfield class.
+		"""
+		bitfield = int.from_bytes(data, byteorder="big")
+
+		if bit_order == BitOrder.little:
+			bitfield = cls.swap_any_bitfield(bitfield)
+
+		bitfield_bit_length = bitfield.bit_length()
+
+		if bitfield_bit_length > length:
+			fitted_bitfield = bitfield >> bitfield_bit_length - length
+		else:
+			fitted_bitfield = bitfield
+
+		return Bitfield(length, fitted_bitfield)
 
 	@staticmethod
 	def to_bitfield(index: int) -> int:
@@ -116,3 +139,23 @@ class Bitfield:
 			int: the bitfield.
 		"""
 		return pow(2, index)
+
+	@staticmethod
+	def swap_any_bitfield(bitfield: int, length=None) -> int:
+		"""Returns the swapped bitfield.
+
+		If 0b10 is specified as an argument, the return value will be 0b01.
+
+		Args:
+			bitfield (int): bitfield you want to swap.
+			length (int, optional): bit length. If None, the current bitfield length is applied. Defaults to None.
+
+		Returns:
+			int: swapped bitfield.
+		"""
+		if not length:
+			length = len(str(bitfield))
+
+		bitfield_str = format(bitfield, "b")
+		swapped_bitfield_str = bitfield_str.zfill(length)[::-1]
+		return int(swapped_bitfield_str, 2)
