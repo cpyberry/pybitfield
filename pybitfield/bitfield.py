@@ -98,6 +98,34 @@ class Bitfield:
 		"""
 		return self.swap_any_bitfield(self.bitfield, length)
 
+	@classmethod
+	def from_bytes(cls, data: bytes, length: int, bit_order=BitOrder.big):
+		"""Create an instance of the Bitfield class from the bytes type.
+
+		When the bytes is converted to bitfield, bits which exceed max bit length are removed.
+
+		Args:
+			data (bytes): bytes to convert to bitfield.
+			length (int): fixed length size of bitfield.
+			bit_order (BitOrder, optional): bit order. Defaults to BitOrder.big.
+
+		Returns:
+			Bitfield: an instance of the Bitfield class.
+		"""
+		bitfield = int.from_bytes(data, byteorder="big")
+
+		if bit_order == BitOrder.little:
+			bitfield = cls.swap_any_bitfield(bitfield)
+
+		bitfield_bit_length = bitfield.bit_length()
+
+		if bitfield_bit_length > length:
+			fitted_bitfield = bitfield >> bitfield_bit_length - length
+		else:
+			fitted_bitfield = bitfield
+
+		return Bitfield(length, fitted_bitfield)
+
 	@staticmethod
 	def to_bitfield(index: int) -> int:
 		"""Return a bitfield with a bit at the position specified by index.
