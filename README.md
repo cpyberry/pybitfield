@@ -1,10 +1,10 @@
 # pybitfield
 
-A library that makes it easy to handle bitfields with python.
+A library that makes it easy to handle bitfield with python
 
 ## Usage
 
-When constructing a bitfield with 5 elements, do as follows.
+When you construct a bitfield with 5 elements, do as follows.
 
 In this case, information up to 5 bits can be stored.
 
@@ -30,7 +30,7 @@ bitfield.set_bit(1)
 bitfield.set_bit(2)
 bitfield.set_bit(3)
 
-# Since the number of elements is 8 and the index is zero-based, a total of 8 elements from 0 to 7 can be specified.
+# Since the number of elements is 5 and the index is zero-based, a total of 5 index from 0 to 4 can be specified.
 # bitfield.set_bit(5)
 ```
 
@@ -66,7 +66,7 @@ If you want to reverse bitfield, you can use `swap_bitfield()`.
 
 The argument represents the bit length.
 
-If you call the method with no arguments, the number of elements in the bitfield will be applied.
+If you call the method with no arguments, the number of elements in the bitfield is applied to the bit length of the return value.
 
 ```python
 bitfield.swap_bitfield()
@@ -88,7 +88,7 @@ You can use `BitOrder` enumerator class to specify the bit order.
 
 If the number of elements in the bitfield is not a multiple of 8, the smallest byte length that can represent it will be applied.
 
-In this case, the number of elements in the bitfield is 5, so 1 byte is applied.
+In this case, the number of elements in the bitfield is 5, so the byte length of 1 is applied.
 
 ```python
 bitfield.get_bitfield_bytes(BitOrder.big)
