@@ -30,7 +30,7 @@ bitfield.set_bit(1)
 bitfield.set_bit(2)
 bitfield.set_bit(3)
 
-# Since the number of elements is 8 and the index is zero-based, a total of 8 elements from 0 to 7 can be specified.
+# Since the number of elements is 5 and the index is zero-based, a total of 5 index from 0 to 4 can be specified.
 # bitfield.set_bit(5)
 ```
 
