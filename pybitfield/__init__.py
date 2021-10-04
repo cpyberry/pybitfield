@@ -10,12 +10,14 @@ github: https://github.com/cpyberry
 
 from .bitfield import BitOrder, Bitfield
 
-__title__ = "pybitfield"
-__description__ = "A library that makes it easy to handle bitfields with python"
-__copyright__ = "Copyright 2021 cpyberry"
-__url__ = "https://github.com/cpyberry/pybitfield"
-__license__ = "Apache-2.0 License"
-__version__ = "1.0.0"
-__author__ = "cpyberry"
-__author_email__ = "cpyberry222@gmail.com"
-__python_requires__ = ">=3.6"
+from .__info__ import (
+	__title__,
+	__description__,
+	__copyright__,
+	__url__,
+	__license__,
+	__version__,
+	__author__,
+	__author_email__,
+	__python_requires__
+)
