@@ -2,6 +2,16 @@
 
 A library that makes it easy to handle bitfield with python
 
+## Requirements
+
+* python 3.6, 3.7, 3.8, 3.9
+
+## Installation
+
+```shell
+pip install pybitfield
+```
+
 ## Usage
 
 When you construct a bitfield with 5 elements, do as follows.
