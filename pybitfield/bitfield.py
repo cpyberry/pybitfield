@@ -126,6 +126,33 @@ class Bitfield:
 
 		return Bitfield(length, fitted_bitfield)
 
+	@classmethod
+	def from_list(cls, bit_bool_list: list, length: int, bit_order=BitOrder.big):
+		"""Create an instance of the Bitfield class from the list type.
+
+		When the list is converted to bitfield, bits which exceed max bit length are removed.
+
+		Args:
+			base_bool_list (list): list to convert to bitfield.
+			length (int): fixed length size of bitfield.
+			bit_order (BitOrder, optional): bit order. Defaults to BitOrder.big.
+
+		Returns:
+			Bitfield: an instance of the Bitfield class.
+		"""
+		if bit_order == BitOrder.little:
+			bit_bool_list.reverse()
+
+		bitfiled_bit_length = len(bit_bool_list)
+		if bitfiled_bit_length > length:
+			length = bitfiled_bit_length
+
+		bitfield = Bitfield(length)
+		for index, bit_bool in enumerate(bit_bool_list):
+			if bit_bool is True:
+				bitfield.set_bit(index)
+		return bitfield
+
 	@staticmethod
 	def to_bitfield(index: int) -> int:
 		"""Return a bitfield with a bit at the position specified by index.
