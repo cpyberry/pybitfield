@@ -65,7 +65,7 @@ class Bitfield:
 		"""
 		return self.bitfield & self.to_bitfield(index) != 0
 
-	def get_bit_list(self, bit_order=BitOrder.big) -> list:
+	def get_bit_list(self) -> list:
 		"""Return the current bit state as a bool type list.
 
 		Returns:
@@ -75,12 +75,12 @@ class Bitfield:
 		for index in range(self.number_of_element):
 			result.append(self.is_bit(index))
 
-		if bit_order == BitOrder.little:
+		if self.bit_order == BitOrder.little:
 			result.reverse()
 
 		return result
 
-	def get_bitfield_bytes(self, bit_order=BitOrder.big) -> bytes:
+	def get_bitfield_bytes(self) -> bytes:
 		"""Convert current bitfield to bytes type.
 
 		Returns:
@@ -88,7 +88,7 @@ class Bitfield:
 		"""
 		byte_length = math.ceil(self.number_of_element / 8)
 
-		if bit_order == BitOrder.big:
+		if self.bit_order == BitOrder.big:
 			return self.bitfield.to_bytes(byte_length, byteorder="big")
 		else:
 			bit_length = byte_length * 8
