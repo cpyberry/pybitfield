@@ -18,14 +18,21 @@ class BitOrder(Enum):
 
 
 class Bitfield:
-	def __init__(self, number_of_element: int, bitfield=0):
+	def __init__(self, number_of_element: int, bitfield=0, bit_order=BitOrder.big, no_invert=False):
 		"""
 		Args:
 			number_of_element (int): fixed length bitfield size.
 			bitfield (int, optional): initial value of bitfield. Defaults to 0.
+			bit_order (BitOrder, optional): bit order. Defaults to BitOrder.big.
+			no_invert (bool, optional): if true, when little endian is specified in bit order, the bitfield specified in bitfield argument is not inverted. Default to False.
 		"""
 		self.number_of_element = number_of_element
-		self.bitfield = bitfield
+		self.bit_order = bit_order
+
+		if not no_invert and bit_order == BitOrder.little:
+			self.bitfield = self.swap_any_bitfield(bitfield)
+		else:
+			self.bitfield = bitfield
 
 	def set_bit(self, index: int) -> None:
 		"""Set the bit at the location specified by index.
@@ -128,7 +135,7 @@ class Bitfield:
 		else:
 			fitted_bitfield = bitfield
 
-		return Bitfield(length, fitted_bitfield)
+		return Bitfield(length, fitted_bitfield, bit_order, no_invert=True)
 
 	@classmethod
 	def from_list(cls, bit_bool_list: list, length: int, bit_order=BitOrder.big):
@@ -151,7 +158,7 @@ class Bitfield:
 		if bitfiled_bit_length > length:
 			length = bitfiled_bit_length
 
-		bitfield = Bitfield(length)
+		bitfield = Bitfield(length, bit_order=bit_order)
 		for index, bit_bool in enumerate(bit_bool_list):
 			if bit_bool is True:
 				bitfield.set_bit(index)
