@@ -20,12 +20,16 @@ In this case, information up to 5 bits can be stored.
 
 Unless otherwise specified, all bits are 0.
 
+You can use `BitOrder` enumerator class to specify the bit order.
+
+If you want to specify little endian, you should specify `BitOrder.little` in the` bit_order` argument.
+
 ```python
 from pybitfield import Bitfield, BitOrder
 
 
 number_of_element = 5
-bitfield = Bitfield(number_of_element)
+bitfield = Bitfield(number_of_element, bit_order=BitOrder.little)
 ```
 
 If you want to set the bit, do as follows.
@@ -66,6 +70,8 @@ The index of bitfield and the index of list correspond.
 
 0 is converted to False, 1 is converted to True.
 
+If you specify little endian, the converted list is reversed.
+
 ```python
 bitfield.get_bit_list()
 
@@ -94,18 +100,20 @@ bitfield.swap_bitfield(10)
 
 If you want to convert bitfield to bytes type, you can use `get_bitfield_bytes()`.
 
-You can use `BitOrder` enumerator class to specify the bit order.
-
 If the number of elements in the bitfield is not a multiple of 8, the smallest byte length that can represent it will be applied.
 
 In this case, the number of elements in the bitfield is 5, so the byte length of 1 is applied.
 
 ```python
-bitfield.get_bitfield_bytes(BitOrder.big)
+bitfield.get_bitfield_bytes()
 # b'\x05'
 # 0b00000101
+```
 
-bitfield.get_bitfield_bytes(BitOrder.little)
+If you specify little endian, the a returned array of bytes will be reversed.
+
+```python
+bitfield.get_bitfield_bytes()
 # b'\xa0'
 # 0b10100000
 ```
