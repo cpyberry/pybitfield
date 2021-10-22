@@ -20,12 +20,16 @@ pip install pybitfield
 
 特に指定のない限り、すべてのビットは0クリアされます。
 
+`BitOrder`クラスはビットオーダーを指定したい時に使います。
+
+リトルエンディアンを指定したい場合、`bit_order`引数に`BitOrder.little`を渡してください。
+
 ```python
 from pybitfield import Bitfield, BitOrder
 
 
 number_of_element = 5
-bitfield = Bitfield(number_of_element)
+bitfield = Bitfield(number_of_element, bit_order=BitOrder.big)
 ```
 
 ビットを設定したい場合は、以下のようにしてください。
@@ -66,6 +70,8 @@ bitfield.is_bit(2)  # return True
 
 0はFalseに、1はTrueに変換されます。
 
+リトルエンディアンを指定している場合、変換後のリストは逆にされます。
+
 ```python
 bitfield.get_bit_list()
 
@@ -94,18 +100,20 @@ bitfield.swap_bitfield(10)
 
 `get_bitfield_bytes()`を使えばビットフィールドをbytes型に変換できます。
 
-`BitOrder`クラスはビットオーダーを指定したい時に使います。
-
 ビットフィールドの要素数が8の倍数でない場合、それ表すことができる最小のバイト長が適用されます。
 
 この場合、ビットフィールドの要素数は5なのでバイト長は1が適応されます。
 
 ```python
-bitfield.get_bitfield_bytes(BitOrder.big)
+bitfield.get_bitfield_bytes()
 # b'\x05'
 # 0b00000101
+```
 
-bitfield.get_bitfield_bytes(BitOrder.little)
+リトルエンディアンを指定している場合、返却されるバイト列は逆にされます。
+
+```python
+bitfield.get_bitfield_bytes()
 # b'\xa0'
 # 0b10100000
 ```
