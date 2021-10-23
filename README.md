@@ -29,7 +29,7 @@ from pybitfield import Bitfield, BitOrder
 
 
 number_of_element = 5
-bitfield = Bitfield(number_of_element, bit_order=BitOrder.little)
+bitfield = Bitfield(number_of_element, bit_order=BitOrder.big)
 ```
 
 If you want to set the bit, do as follows.
