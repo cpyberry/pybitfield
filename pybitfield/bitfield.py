@@ -110,14 +110,15 @@ class Bitfield:
 		return self.swap_any_bitfield(self.bitfield, length)
 
 	@classmethod
-	def from_bytes(cls, data: bytes, length: int, bit_order=BitOrder.big):
+	def from_bytes(cls, data: bytes, length=0, bit_order=BitOrder.big):
 		"""Create an instance of the Bitfield class from the bytes type.
 
 		When the bytes is converted to bitfield, bits which exceed max bit length are removed.
+		If the length argument is omitted, the minimum bit length that can represent a bitfield is specified.
 
 		Args:
 			data (bytes): bytes to convert to bitfield.
-			length (int): fixed length size of bitfield.
+			length (int, optional): fixed length size of bitfield. Defaults to 0.
 			bit_order (BitOrder, optional): bit order. Defaults to BitOrder.big.
 
 		Returns:
@@ -129,6 +130,9 @@ class Bitfield:
 			bitfield = cls.swap_any_bitfield(bitfield)
 
 		bitfield_bit_length = bitfield.bit_length()
+
+		if not length:
+			length = bitfield_bit_length
 
 		if bitfield_bit_length > length:
 			fitted_bitfield = bitfield >> bitfield_bit_length - length
