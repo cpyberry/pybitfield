@@ -142,14 +142,15 @@ class Bitfield:
 		return Bitfield(length, fitted_bitfield, bit_order, no_invert=True)
 
 	@classmethod
-	def from_list(cls, bit_bool_list: list, length: int, bit_order=BitOrder.big):
+	def from_list(cls, bit_bool_list: list, length=0, bit_order=BitOrder.big):
 		"""Create an instance of the Bitfield class from the list type.
 
 		When the list is converted to bitfield, bits which exceed max bit length are removed.
+		If the length argument is omitted, the minimum bit length that can represent a bitfield is specified.
 
 		Args:
 			base_bool_list (list): list to convert to bitfield.
-			length (int): fixed length size of bitfield.
+			length (int, optional): fixed length size of bitfield. Defaults to 0.
 			bit_order (BitOrder, optional): bit order. Defaults to BitOrder.big.
 
 		Returns:
@@ -159,6 +160,10 @@ class Bitfield:
 			bit_bool_list.reverse()
 
 		bitfiled_bit_length = len(bit_bool_list)
+
+		if not length:
+			length = bitfiled_bit_length
+
 		if bitfiled_bit_length > length:
 			length = bitfiled_bit_length
 
